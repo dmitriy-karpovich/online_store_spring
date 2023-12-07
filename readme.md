@@ -1,7 +1,10 @@
 <h2 align="center">Online Store</h2>
-Spring version of the
+Spring version of the [project][1]
 
-project <https://github.com/dmitriy-karpovich/online-store-epam-project>
+[1]:https://github.com/dmitriy-karpovich/online-store-epam-project
+
+
+
 
 
 
