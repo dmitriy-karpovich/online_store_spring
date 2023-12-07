@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:insert="~{fragments/headerRefs.html}">
+  <title>Place order | Online store</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col"></div>
+    <div class="col-6 my-sm-3">
+      <div sec:authorize="isAnonymous()">
+        <div class="alert alert-danger fade show" role="alert" th:if="#{language.noRights}"></div>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <div th:if="${orderResult == 'noBankCard'}">
+           <div class="alert alert-danger fade show" role="alert" th:text="#{language.noBankCard}"></div>
+        </div>
+        <form action="#" th:action="@{/order/place-order}" th:object="${paymentInformationDto}" method="post">
+          <h4 class="mt-5 fw-bold" th:text="#{language.enterOrderDetails}"></h4>
+          <div class="mb-3">
+
+              <label for="address" class="form-label" th:text="#{language.address}"></label>
+              <input type="text" class="form-control" id="address" th:field="*{deliveryAddress}" th:placeholder="#{language.address}">
+            <div th:if="${#fields.hasErrors('deliveryAddress')}" style="margin-bottom: 25px" class="text-danger">
+                <ul>
+                  <li th:errors="*{deliveryAddress}"></li>
+                </ul>
+            </div>
+          </div>
+          <div class="mb-3">
+              <label for="delivery-date" class="form-label" th:text="#{language.deliveryDate}"></label>
+              <input type="date" class="form-control" id="delivery-date" th:field="*{deliveryDate}" th:placeholder="#{language.deliveryDate}">
+              <div th:if="${#fields.hasErrors('deliveryDate')}" style="margin-bottom: 25px" class="text-danger">
+                  <ul>
+                      <li th:errors="*{deliveryDate}"></li>
+                  </ul>
+              </div>
+          </div>
+          <h3 class="text-primary" th:text="#{language.toPay} + ': ' + ${totalCost} + ' ' +  #{information.price}"></h3>
+          <div class="col-sm"></div>
+          <br><h4 th:text="#{language.enterCardDetails}"></h4>
+          <div class="row mb-3">
+            <div class="col-sm mb-3">
+                <label for="card-number" class="form-label" th:text="#{language.cardNumber}"></label>
+                <input type="text" class="form-control" id="card-number" th:field="*{cardNumber}" th:placeholder="0101010101010101">
+                <div th:if="${#fields.hasErrors('cardNumber')}" style="margin-bottom: 25px" class="text-danger">
+                  <ul>
+                    <li th:errors="*{cardNumber}"></li>
+                  </ul>
+                </div>
+            </div>
+            <div class="col-sm">
+                <label for="cvv" class="form-label">CVV</label>
+                <input type="password" class="form-control" id="cvv" th:field="*{cvvNumber}" th:placeholder="000">
+              <div th:if="${#fields.hasErrors('cvvNumber')}" style="margin-bottom: 25px" class="text-danger">
+                <ul>
+                  <li th:errors="*{cvvNumber}"></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+              <label for="cardholder-name" class="form-label" th:text="#{language.cardholderName}"></label>
+              <input type="text" id="cardholder-name" th:field="*{cardOwnerName}" class="form-control" th:placeholder="#{language.cardholderName}">
+              <div th:if="${#fields.hasErrors('cardOwnerName')}" style="margin-bottom: 25px" class="text-danger">
+                <ul>
+                  <li th:errors="*{cardOwnerName}"></li>
+                </ul>
+              </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm mb-3">
+                <label for="month" class="form-label" th:text="#{language.month}"></label>
+                <input type="text" class="form-control" id="month" th:field="*{expirationMonth}" th:placeholder="12">
+                <div th:if="${#fields.hasErrors('expirationMonth')}" style="margin-bottom: 25px" class="text-danger">
+                  <ul>
+                    <li th:errors="*{expirationMonth}"></li>
+                  </ul>
+                </div>
+            </div>
+            <div class="col-sm">
+                <label for="year" class="form-label" th:text="#{language.year}"></label>
+                <input type="text" class="form-control" id="year" th:field="*{expirationYear}" th:placeholder="2023">
+                <div th:if="${#fields.hasErrors('expirationYear')}" style="margin-bottom: 25px" class="text-danger">
+                  <ul>
+                    <li th:errors="*{expirationYear}"></li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" th:text="#{language.confirm}"></button>
+        </form>
+        <hr class="dropdown-divider">
+        <a th:href="@{/main}" th:text="#{language.home}"></a>
+      </div>
+    </div>
+    <div class="col-sm"></div>
+  </div>
+</div>
+</body>
+</html>

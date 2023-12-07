@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:insert="~{fragments/header.html}">
+    <title>My Orders | Online store</title>
+</head>
+
+<body>
+<div class="p-3">
+    <div class="row justify-content-center">
+        <div sec:authorize="isAnonymous()">
+            <div class="alert alert-danger fade show" role="alert" th:text="#{language.noRights}">
+            </div>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <div th:if="${orderResult == 'orderPlaced'}">
+                <div class="alert alert-success fade show" role="alert" th:text="#{language.orderPlaced}">
+                </div>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col" th:text="#{language.orderId}"></th>
+                    <th scope="col" th:text="#{language.title}"></th>
+                    <th scope="col" th:text="#{language.number}"></th>
+                    <th scope="col" th:text="#{language.address}"></th>
+                    <th scope="col" th:text="#{language.orderDate}"></th>
+                    <th scope="col" th:text="#{language.deliveryDate}"></th>
+                    <th scope="col" th:text="#{language.status}"></th>
+                </tr>
+                </thead>
+                <div th:each="userOrder : ${userOrders}">
+                    <tr>
+                        <th scope="row" th:text="'# ' + ${userOrder.orderInformation.id}">
+                        </th>
+                        <td class="text-primary">
+                            <p th:text="${userOrder.product.name}"></p>
+                        </td>
+                        <td class="text-primary">
+                            <p th:text="${userOrder.purchasedQuantity}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${userOrder.orderInformation.deliveryAddress}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${userOrder.orderInformation.orderDate}"></p>
+                        </td>
+                        <td>
+                            <p th:text="${userOrder.orderInformation.deliveryDate}"></p>
+                        </td>
+                        <div th:if="${userOrder.orderInformation.orderStatus} == 'доставлен'">
+                            <td class="text-success" th:text="${userOrder.orderInformation.orderStatus}">
+                            </td>
+                        </div>
+                        <div th:if="${userOrder.orderInformation.orderStatus} == 'ожидается'">
+                            <td class="text-active" th:text="${userOrder.orderInformation.orderStatus}">
+                            </td>
+                        </div>
+                        <div th:if="${userOrder.orderInformation.orderStatus} == 'отменен'">
+                            <td class="text-danger" th:text="${userOrder.orderInformation.orderStatus}">
+                            </td>
+                        </div>
+                    </tr>
+                </div>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<div th:insert="~{fragments/footer.html}"></div>
+</html>

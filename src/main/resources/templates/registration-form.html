@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:insert="~{fragments/headerRefs.html}">
+    <title>Registration | Online store</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col"></div>
+        <div class="col-6 my-sm-3">
+            <div sec:authorize="isAuthenticated()">
+                <div class="alert alert-danger fade show" role="alert">
+                    <div th:text="#{language.alreadyLoggedIn}"/>
+                </div>
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <h1 class="mt-5 fw-bold"><div th:text="#{language.logUp}"/></h1>
+                <div th:if="${userMessage == 'userAlreadyExists'}">
+                    <div class="alert alert-danger fade show" role="alert" th:text="#{language.userAlreadyExists}">
+                    </div>
+                </div>
+                <form action="#" th:action="@{/user/register}" th:object="${userDto}" method="post">
+                    <div class="row mb-3">
+                        <div class="col-sm mb-3">
+                            <label for="name" class="form-label"><div th:text="#{language.name}"/></label>
+                            <input type="text" id="name" th:field="*{name}" class="form-control"
+                                   th:placeholder="#{language.name}"/>
+                            <div th:if="${#fields.hasErrors('name')}" style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:errors="*{name}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <label for="surname" class="form-label"><div th:text="#{language.surname}"/></label>
+                            <input type="text" id="surname" th:field="*{surname}" class="form-control"
+                                   th:placeholder="#{language.surname}"/>
+                            <div th:if="${#fields.hasErrors('surname')}" style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:errors="*{surname}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm mb-3">
+                            <label for="patronymic" class="form-label"><div th:text="#{language.patronymic}"/></label>
+                            <input type="text" id="patronymic" th:field="*{patronymic}" class="form-control"
+                                th:placeholder="#{language.patronymic}">
+                            <div th:if="${#fields.hasErrors('patronymic')}" style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:errors="*{patronymic}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <label for="phone" class="form-label"><div th:text="#{language.mobilePhone}"/></label>
+                            <input type="text" id="phone" th:field="*{phone}" class="form-control"
+                                th:placeholder="#{language.mobilePhone}">
+                            <div th:if="${#fields.hasErrors('phone')}" style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:errors="*{phone}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label"><div th:text="#{language.emailAddress}"/></label>
+                        <input type="text" class="form-control" th:field="*{email}" id="email" placeholder="email@example.com">
+                        <div th:if="${#fields.hasErrors('email')}" style="margin-bottom: 25px" class="text-danger">
+                            <ul>
+                                <li th:errors="*{email}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label"><div th:text="#{language.username}"/></label>
+                        <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="username">
+                        <div th:if="${#fields.hasErrors('username')}" style="margin-bottom: 25px" class="text-danger">
+                            <ul>
+                                <li th:errors="*{username}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password-first" class="form-label"><div th:text="#{language.password}"/></label>
+                        <input type="password" class="form-control" th:field="*{password}" id="password-first" placeholder="password">
+                        <div th:if="${#fields.hasErrors('password')}" style="margin-bottom: 25px" class="text-danger">
+                            <ul>
+                                <li th:errors="*{password}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password-second" class="form-label"><div th:text="#{language.confirmPassword}"/></label>
+                        <input type="password" class="form-control" th:field="*{matchingPassword}" id="password-second" placeholder="password">
+                        <div th:if="${#fields.hasErrors('matchingPassword')}"
+                             style="margin-bottom: 25px" class="text-danger">
+                            <ul>
+                                <li th:errors="*{matchingPassword}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit"><div th:text="#{language.logUp}"/></button>
+                </form>
+                <hr class="dropdown-divider">
+                <p class="text-muted"><div th:text="#{language.haveAccount}"/>
+                <a th:href="@{/user/login-page}">
+                    <div th:text="#{language.logIn}"/></a>
+                <a th:href="@{/main}"><div th:text="#{language.home}"/></a>
+            </div>
+        </div>
+        <div class="col-sm"></div>
+    </div>
+</div>
+</body>
+</html>

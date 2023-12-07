@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:insert="~{fragments/header.html}">
+    <title>Catalog | Online store</title>
+</head>
+
+<body>
+<div class="container">
+    <div th:if="${productMessage == 'productAdded'}">
+        <div class="alert alert-success fade show" role="alert" th:text="#{language.productAddedToCatalog}">
+        </div>
+    </div>
+    <div th:if="${productMessage == 'productUpdated'}">
+        <div class="alert alert-success fade show" role="alert" th:text="#{language.productUpdated}">
+        </div>
+    </div>
+    <div th:if="${basketMessage == 'error'}">
+        <div class="alert alert-danger fade show" role="alert" th:text="#{language.productAlreadyInTheBasket}"></div>
+    </div>
+    <div th:if="${basketMessage == 'ok'}">
+        <div class="alert alert-success fade show" role="alert" th:text="#{language.productAddedToBasket}"></div>
+    </div>
+    <div th:each="product : ${products}">
+        <div class="my-lg-4">
+            <div class="col-6"></div>
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h5>
+                            <span th:text="${product.name}"></span>
+                            <div sec:authorize="hasRole('ADMIN')">
+                            <a th:href="@{/product/update-form(productId=${product.id})}" th:text="#{language.edit}">
+                                </a>
+                            </div>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img th:src="@{'/images/' + ${product.photoReference}}" class="img-fluid" width="150" height="150">
+                            </div>
+                            <div class="col-md-8">
+                                <p th:text="#{language.description} + ': ' + ${product.description}">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm text-left">
+                                            <div th:if="${product.status} == true">
+                                                <p class="text-success" th:text="#{language.available}">
+                                            </div>
+                                            <div th:if="${product.status} == false">
+                                                <p class="text-danger" th:text="#{language.notAvailable}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm text-right" th:text="#{language.price} + ': ' + ${product.price} + ' ' + #{information.price}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div sec:authorize="isAuthenticated()">
+                                    <div th:if="${product.status == true}">
+                                        <form action="#" th:action="@{/basket/add-to-basket}" method="post">
+                                            <div class="btn-group" role="group">
+                                                <input type="number" class="form-control col-md-4" step="1" min="1" max="100" id="num_count" name="purchasedQuantity" value="1" title="Qty">
+                                                <input type="hidden" th:name="productId" th:value="${product.id}">
+                                                <button type="submit" class="btn btn-outline-primary" th:text="#{language.addToBasket}"></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+<div th:insert="~{fragments/footer.html}"></div>
+</html>

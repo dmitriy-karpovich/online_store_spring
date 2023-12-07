@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:insert="~{fragments/header.html}">
+    <title>Update product | Online store</title>
+</head>
+<body class="d-flex flex-column h-100">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6 my-sm-3">
+            <div sec:authorize="!hasRole('ADMIN')">
+                <div class="alert alert-danger fade show" role="alert">
+                    <div th:text="#{language.noRights}"/>
+                </div>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                <form action="#" th:action="@{/product/update-product}" th:object="${product}" method="post">
+                    <h4 th:text="#{language.enterProductDetails}"></h4>
+                    <div class="mb-3">
+                        <label for="title" class="form-label" th:text="#{language.nameOfProduct}"/>
+                        <input type="text" class="form-control" th:field="*{name}" id="title" th:placeholder="#{language.nameOfProduct}"/>
+                    </div>
+                    <div th:if="${#fields.hasErrors('name')}" style="margin-bottom: 25px" class="text-danger">
+                        <ul>
+                            <li th:errors="*{name}"></li>
+                        </ul>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm mb-3">
+                            <label for="photo" class="form-label" th:text="#{language.productPhoto}"/>
+                            <input type="text" id="photo" th:field="*{photoReference}" class="form-control" th:placeholder="#{language.productPhoto}"/>
+                            <div th:if="${#fields.hasErrors('photoReference')}" style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:errors="*{photoReference}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <label for="price" class="form-label" th:text="#{language.price}"/>
+                            <input type="text" id="price" th:field="*{price}" class="form-control" th:placeholder="100.15"/>
+                            <div th:if="${#fields.hasErrors('price')}" style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:errors="*{price}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm mb-3">
+                            <label for="category" class="form-label" th:text="#{language.category}"/>
+                            <input type="text" th:field="*{productCategory.categoryName}" id="category" class="form-control" th:placeholder="#{language.category}">
+                            <div th:if="${#fields.hasErrors('productCategory.categoryName')}" style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:errors="*{productCategory.categoryName}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm mb-3">
+                            <label for="quantity" class="form-label" th:text="#{language.availableQuantity}"/>
+                            <input type="text" th:field="*{availableQuantity}" id="quantity" class="form-control" th:placeholder="#{language.availableQuantity}">
+                            <div th:if="${#fields.hasErrors('availableQuantity')}" style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:errors="*{availableQuantity}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <fieldset class="form-group">
+                                <div class="form-check">
+                                    <input type="checkbox" th:field="*{status}" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1" th:text="#{language.availability}"></label>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label" th:text="#{language.description}"></label>
+                        <textarea class="form-control" th:field="*{description}" id="description"
+                            th:placeholder="#{language.description}">
+                        </textarea>
+                        <div th:if="${#fields.hasErrors('description')}" style="margin-bottom: 25px" class="text-danger">
+                            <ul>
+                                <li th:errors="*{description}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input type="hidden" th:field="*{id}">
+                    <button class="btn btn-primary" type="submit" th:text="#{language.confirm}"></button>
+                </form>
+                <hr class="dropdown-divider">
+                <a th:href="@{/main}" th:text="#{language.home}"></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<div th:insert="~{fragments/footer.html}"></div>
+</html>
