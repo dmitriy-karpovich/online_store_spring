@@ -1,6 +1,5 @@
 <h2 align="center">Online Store</h2>
-<h4 align="center">(Spring version of the [project](https://github.com/dmitriy-karpovich/online-store-epam-project))</h4>
-#### (Spring version of the [project](https://github.com/dmitriy-karpovich/online-store-epam-project))
+<h4 align="center">(Spring version of the [project](https://github.com/dmitriy-karpovich/online-store-epam-project/))</h4>
 
 ### Description
 The Online store system.
