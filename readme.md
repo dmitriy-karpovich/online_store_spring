@@ -47,3 +47,4 @@ The administrator, in addition to the functions of a normal user, also has acces
 * Logback logger
 * Build tool: Maven
 * Database: MySQL 8.0.33
+* Bootstrap 4.5.2
