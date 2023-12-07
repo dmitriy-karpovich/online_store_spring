@@ -1,6 +1,8 @@
 <h2 align="center">Online Store</h2>
-<h4 align="center">Spring version of the [project](https://github.com/dmitriy-karpovich/online-store-epam-project)</h4>
+<h4 align="center">(Spring version of the [project](https://github.com/dmitriy-karpovich/online-store-epam-project))</h4>
 
+
+[project](https://github.com/dmitriy-karpovich/online-store-epam-project)
 ### Description
 The Online store system.
 The administrator oversees the product catalog, ensuring that a diverse range of electronic devices are available. 
